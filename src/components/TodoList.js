@@ -22,9 +22,11 @@ class TodoList extends React.Component {
   }
 
   toggleTodoStatus(id) {
-    const todoList = this.state.todoList.slice();
-    todoList[id].isDone = !todoList[id].isDone;
-    return this.setState({todoList});
+    this.setState(({todoList}) => {
+      const allTodo = todoList.map(task => ({...task}));
+      allTodo[id].isDone = !allTodo[id].isDone;
+      return {todoList: allTodo};
+    });
   }
 
   render() {
