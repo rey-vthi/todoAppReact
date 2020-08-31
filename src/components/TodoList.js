@@ -16,23 +16,37 @@ class TodoList extends React.Component {
   handleEnter(todo) {
     this.setState(state => {
       const allTodo = state.todoList.slice();
-      allTodo.push({isDone: false, todo});
+      allTodo.push({status: {isDone: false, isProcessing: false}, todo});
       return {todoList: allTodo};
     });
   }
 
+  getUpdatedTodoStatus(status) {
+    const {isDone, isProcessing} = status;
+    const todoStatus = {
+      1: {isDone: false, isProcessing: false},
+      2: {isDone: false, isProcessing: true},
+      3: {isDone: true, isProcessing: false}
+    };
+    if (!isDone && !isProcessing) return todoStatus[2];
+    if (isProcessing) return todoStatus[3];
+    if (isDone) return todoStatus[1];
+  }
+
   toggleTodoStatus(id) {
     this.setState(({todoList}) => {
-      const allTodo = todoList.map(task => ({...task}));
-      allTodo[id].isDone = !allTodo[id].isDone;
+      const allTodo = todoList.map(todo => ({...todo}));
+      const {status, todo} = {...allTodo[id]};
+      const updatedStatus = this.getUpdatedTodoStatus(status);
+      allTodo[id] = {status: updatedStatus, todo};
       return {todoList: allTodo};
     });
   }
 
   render() {
-    const todoList = this.state.todoList.map(({isDone, todo}, index) => (
+    const todoList = this.state.todoList.map(({status, todo}, index) => (
       <Todo
-        done={isDone}
+        status={status}
         todo={todo}
         key={index}
         id={index}

@@ -1,23 +1,24 @@
 .pending-todo {
-  width: 10px;
-  height: 18px;
   background-color: lightblue;
 }
 
+.processing-todo {
+  background-color: orange;
+}
+
 .done-todo {
+  background-color: mediumseagreen;
+}
+
+.todo-box {
   width: 10px;
   height: 18px;
-  background-color: mediumseagreen;
 }
 
 .todo {
   display: flex;
   padding-bottom: 10px;
   cursor: pointer;
-}
-
-.todo-content {
-  padding-left: 10px;
 }
 
 .strike-through {
