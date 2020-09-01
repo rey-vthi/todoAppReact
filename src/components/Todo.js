@@ -8,9 +8,14 @@ const Todo = function(props) {
   };
   const {color, textIndicator} = style[props.status];
   return (
-    <div className="todo" onClick={() => props.toggleStatus(props.id)}>
+    <div className="todo">
       <div className={color}></div>
-      <span className={textIndicator}>{props.todo}</span>
+      <span
+        className={textIndicator}
+        onClick={() => props.toggleStatus(props.id)}
+      >
+        {props.todo}
+      </span>
     </div>
   );
 };

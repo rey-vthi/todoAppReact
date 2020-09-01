@@ -18,16 +18,17 @@
 .todo {
   display: flex;
   padding-bottom: 10px;
-  cursor: pointer;
 }
 
 .strike-through {
   padding-left: 10px;
   text-decoration: line-through;
+  cursor: pointer;
 }
 
 .text {
   padding-left: 10px;
+  cursor: pointer;
 }
 
 .title {

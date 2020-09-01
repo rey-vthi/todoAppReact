@@ -16,18 +16,16 @@ class TodoList extends React.Component {
 
   handleEnter(todo) {
     this.setState(state => {
-      const allTodo = state.todoList.slice();
-      allTodo.push({status: getDefault(), todo});
-      return {todoList: allTodo};
+      const newTodo = {status: getDefault(), todo};
+      return {todoList: [...state.todoList, newTodo]};
     });
   }
 
   toggleTodoStatus(id) {
     this.setState(({todoList}) => {
       const allTodo = todoList.map(todo => ({...todo}));
-      const {status, todo} = {...allTodo[id]};
-      const updatedStatus = toggleStatus(status);
-      allTodo[id] = {status: updatedStatus, todo};
+      const {status, todo} = allTodo[id];
+      allTodo[id] = {status: toggleStatus(status), todo};
       return {todoList: allTodo};
     });
   }
