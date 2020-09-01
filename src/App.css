@@ -17,7 +17,7 @@
 
 .todo {
   display: flex;
-  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .todo span {
@@ -41,4 +41,9 @@
 .todo-feeder {
   height: 2vh;
   outline: none;
+}
+
+.todoTitle {
+  font-size: larger;
+  font-weight: bold;
 }

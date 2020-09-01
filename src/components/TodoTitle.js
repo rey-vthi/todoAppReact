@@ -1,7 +1,8 @@
 import React from 'react';
 import InputBox from './InputBox';
+import '../App.css';
 
-class Header extends React.Component {
+class TodoTitle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {isEditable: false};
@@ -20,15 +21,19 @@ class Header extends React.Component {
 
   render() {
     const editableText = (
-      <InputBox value={this.props.title} onEnter={this.updateTitle} />
+      <InputBox
+        className="todo-title"
+        value={this.props.title}
+        onEnter={this.updateTitle}
+      />
     );
     const text = (
-      <p className="title" onClick={this.toggleEditStatus}>
+      <h2 className="todo-title" onClick={this.toggleEditStatus}>
         {this.props.title}
-      </p>
+      </h2>
     );
     return <div>{this.state.isEditable ? editableText : text}</div>;
   }
 }
 
-export default Header;
+export default TodoTitle;

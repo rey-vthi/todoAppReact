@@ -3,7 +3,7 @@ import InputBox from './InputBox';
 import Todo from './Todo';
 import '../App.css';
 import {getDefault, toggleStatus} from './statusIterator';
-import Header from './Header';
+import TodoTitle from './TodoTitle';
 
 class TodoList extends React.Component {
   constructor(props) {
@@ -51,7 +51,7 @@ class TodoList extends React.Component {
     ));
     return (
       <div className="container">
-        <Header title={this.state.title} updateTitle={this.updateTitle} />
+        <TodoTitle title={this.state.title} updateTitle={this.updateTitle} />
         {todoList}
         <InputBox onEnter={this.addNewTodo} />
       </div>
