@@ -3,15 +3,18 @@ import InputBox from './InputBox';
 import Todo from './Todo';
 import '../App.css';
 import {getDefault, toggleStatus} from './statusIterator';
+import Header from './Header';
 
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: 'Todo',
       todoList: []
     };
     this.addNewTodo = this.addNewTodo.bind(this);
     this.updateTodoStatus = this.updateTodoStatus.bind(this);
+    this.updateTitle = this.updateTitle.bind(this);
   }
 
   addNewTodo(todo) {
@@ -30,6 +33,12 @@ class TodoList extends React.Component {
     });
   }
 
+  updateTitle(title) {
+    this.setState(({todoList}) => {
+      return {todoList, title};
+    });
+  }
+
   render() {
     const todoList = this.state.todoList.map(({status, todo}, index) => (
       <Todo
@@ -42,7 +51,7 @@ class TodoList extends React.Component {
     ));
     return (
       <div className="container">
-        <p className="title">Todo</p>
+        <Header title={this.state.title} updateTitle={this.updateTitle} />
         {todoList}
         <InputBox onEnter={this.addNewTodo} />
       </div>
