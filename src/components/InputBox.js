@@ -32,7 +32,7 @@ class InputBox extends React.Component {
 }
 
 InputBox.defaultProps = {
-  text: ''
+  value: ''
 };
 
 export default InputBox;
