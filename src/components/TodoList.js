@@ -10,18 +10,18 @@ class TodoList extends React.Component {
     this.state = {
       todoList: []
     };
-    this.handleEnter = this.handleEnter.bind(this);
-    this.toggleTodoStatus = this.toggleTodoStatus.bind(this);
+    this.addNewTodo = this.addNewTodo.bind(this);
+    this.updateTodoStatus = this.updateTodoStatus.bind(this);
   }
 
-  handleEnter(todo) {
+  addNewTodo(todo) {
     this.setState(state => {
       const newTodo = {status: getDefault(), todo};
       return {todoList: [...state.todoList, newTodo]};
     });
   }
 
-  toggleTodoStatus(id) {
+  updateTodoStatus(id) {
     this.setState(({todoList}) => {
       const allTodo = todoList.map(todo => ({...todo}));
       const {status, todo} = allTodo[id];
@@ -37,14 +37,14 @@ class TodoList extends React.Component {
         todo={todo}
         key={index}
         id={index}
-        toggleStatus={this.toggleTodoStatus}
+        toggleStatus={this.updateTodoStatus}
       />
     ));
     return (
       <div className="container">
         <p className="title">Todo</p>
         {todoList}
-        <InputBox onEnter={this.handleEnter} />
+        <InputBox onEnter={this.addNewTodo} />
       </div>
     );
   }

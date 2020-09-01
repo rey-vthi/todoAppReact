@@ -3,7 +3,9 @@ import React from 'react';
 class InputBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {text: ''};
+    this.state = {text: props.value};
+    this.handleChange = this.handleChange.bind(this);
+    this.addTodo = this.addTodo.bind(this);
   }
 
   handleChange(event) {
@@ -11,7 +13,7 @@ class InputBox extends React.Component {
     this.setState({text});
   }
 
-  handleEnter(event) {
+  addTodo(event) {
     if (event.keyCode === 13 && this.state.text !== '') {
       this.props.onEnter(this.state.text);
       return this.setState({text: ''});
@@ -21,12 +23,16 @@ class InputBox extends React.Component {
     return (
       <input
         className="todo-feeder"
-        onChange={e => this.handleChange(e)}
-        onKeyDown={e => this.handleEnter(e)}
+        onChange={this.handleChange}
+        onKeyDown={this.addTodo}
         value={this.state.text}
       ></input>
     );
   }
 }
+
+InputBox.defaultProps = {
+  text: ''
+};
 
 export default InputBox;
