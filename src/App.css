@@ -41,6 +41,7 @@
 .todo-feeder {
   height: 2vh;
   outline: none;
+  margin-top: 1vw;
 }
 
 .todoTitle {

@@ -27,8 +27,7 @@ class TodoList extends React.Component {
   updateTodoStatus(id) {
     this.setState(({todoList}) => {
       const allTodo = todoList.map(todo => ({...todo}));
-      const {status, todo} = allTodo[id];
-      allTodo[id] = {status: toggleStatus(status), todo};
+      allTodo[id].status = toggleStatus(allTodo[id].status);
       return {todoList: allTodo};
     });
   }
