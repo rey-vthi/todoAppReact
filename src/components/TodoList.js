@@ -2,6 +2,7 @@ import React from 'react';
 import InputBox from './InputBox';
 import Todo from './Todo';
 import '../App.css';
+import {getDefault, toggleStatus} from './statusIterator';
 
 class TodoList extends React.Component {
   constructor(props) {
@@ -16,28 +17,16 @@ class TodoList extends React.Component {
   handleEnter(todo) {
     this.setState(state => {
       const allTodo = state.todoList.slice();
-      allTodo.push({status: {isDone: false, isProcessing: false}, todo});
+      allTodo.push({status: getDefault(), todo});
       return {todoList: allTodo};
     });
-  }
-
-  getUpdatedTodoStatus(status) {
-    const {isDone, isProcessing} = status;
-    const todoStatus = {
-      1: {isDone: false, isProcessing: false},
-      2: {isDone: false, isProcessing: true},
-      3: {isDone: true, isProcessing: false}
-    };
-    if (!isDone && !isProcessing) return todoStatus[2];
-    if (isProcessing) return todoStatus[3];
-    if (isDone) return todoStatus[1];
   }
 
   toggleTodoStatus(id) {
     this.setState(({todoList}) => {
       const allTodo = todoList.map(todo => ({...todo}));
       const {status, todo} = {...allTodo[id]};
-      const updatedStatus = this.getUpdatedTodoStatus(status);
+      const updatedStatus = toggleStatus(status);
       allTodo[id] = {status: updatedStatus, todo};
       return {todoList: allTodo};
     });

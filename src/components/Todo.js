@@ -1,13 +1,12 @@
 import React from 'react';
 
 const getIndicators = function(status) {
-  if (status.isDone) {
-    return {color: 'todo-box done-todo', textIndicator: 'strike-through'};
-  }
-  if (status.isProcessing) {
-    return {color: 'todo-box processing-todo', textIndicator: 'text'};
-  }
-  return {color: 'todo-box pending-todo', textIndicator: 'text'};
+  const style = {
+    done: {color: 'todo-box done-todo', textIndicator: 'strike-through'},
+    working: {color: 'todo-box processing-todo', textIndicator: 'text'},
+    undone: {color: 'todo-box pending-todo', textIndicator: 'text'}
+  };
+  return style[status];
 };
 
 const Todo = function(props) {

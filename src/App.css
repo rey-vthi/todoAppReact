@@ -3,7 +3,7 @@
 }
 
 .processing-todo {
-  background-color: orange;
+  background-color: lightsalmon;
 }
 
 .done-todo {
@@ -13,6 +13,10 @@
 .todo-box {
   width: 10px;
   height: 18px;
+}
+
+.todo-box span {
+  text-decoration: line-through;
 }
 
 .todo {
