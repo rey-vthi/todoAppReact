@@ -18,10 +18,6 @@
   margin-top: 1vw;
 }
 
-.remove {
-  cursor: pointer;
-}
-
 .task {
   margin: 4px;
   cursor: pointer;
@@ -48,4 +44,13 @@
 
 .undone::before {
   background-color: lightblue;
+}
+
+.remove {
+  visibility: hidden;
+}
+
+.todo:hover .remove {
+  cursor: pointer;
+  visibility: visible;
 }
