@@ -1,6 +1,7 @@
 import React from 'react';
 import InputBox from './InputBox';
 import '../App.css';
+import Delete from './Delete';
 
 class TodoTitle extends React.Component {
   constructor(props) {
@@ -28,9 +29,12 @@ class TodoTitle extends React.Component {
       />
     );
     const text = (
-      <h2 className="todo-title" onClick={this.toggleEditStatus}>
-        {this.props.title}
-      </h2>
+      <div className="todo">
+        <h2 className="todo-title" onClick={this.toggleEditStatus}>
+          {this.props.title}
+        </h2>
+        <Delete remove={this.props.removeAllTodo} />
+      </div>
     );
     return <div>{this.state.isEditable ? editableText : text}</div>;
   }

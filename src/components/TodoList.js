@@ -17,6 +17,7 @@ class TodoList extends React.Component {
     this.updateTodoStatus = this.updateTodoStatus.bind(this);
     this.updateTitle = this.updateTitle.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
+    this.removeAllTodo = this.removeAllTodo.bind(this);
   }
 
   addNewTodo(todo) {
@@ -48,6 +49,11 @@ class TodoList extends React.Component {
     });
   }
 
+  removeAllTodo() {
+    this.setState({todoList: []});
+    this.lastTaskId = 0;
+  }
+
   render() {
     const todoList = this.state.todoList.map(({status, todo, id}, index) => (
       <Todo
@@ -56,12 +62,16 @@ class TodoList extends React.Component {
         key={index}
         id={id}
         toggleStatus={this.updateTodoStatus}
-        removeTodo={this.removeTodo}
+        removeTodo={() => this.removeTodo(id)}
       />
     ));
     return (
       <div className="container">
-        <TodoTitle title={this.state.title} updateTitle={this.updateTitle} />
+        <TodoTitle
+          title={this.state.title}
+          updateTitle={this.updateTitle}
+          removeAllTodo={this.removeAllTodo}
+        />
         {todoList}
         <InputBox onEnter={this.addNewTodo} />
       </div>

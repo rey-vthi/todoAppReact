@@ -1,4 +1,5 @@
 import React from 'react';
+import Delete from './Delete';
 
 const Todo = function(props) {
   const {status, id, toggleStatus, removeTodo, todo} = props;
@@ -7,9 +8,7 @@ const Todo = function(props) {
       <div className={`task ${status}`} onClick={() => toggleStatus(id)}>
         {todo}
       </div>
-      <div className="remove" onClick={() => removeTodo(id)}>
-        X
-      </div>
+      <Delete remove={removeTodo} />
     </div>
   );
 };
