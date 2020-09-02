@@ -5,11 +5,6 @@ import '../App.css';
 import {getDefault, toggleStatus} from './statusIterator';
 import TodoTitle from './TodoTitle';
 
-const generateId = function() {
-  let id = 0;
-  return () => id++;
-};
-
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
@@ -17,16 +12,16 @@ class TodoList extends React.Component {
       title: 'Todo',
       todoList: []
     };
+    this.lastTaskId = 0;
     this.addNewTodo = this.addNewTodo.bind(this);
     this.updateTodoStatus = this.updateTodoStatus.bind(this);
     this.updateTitle = this.updateTitle.bind(this);
-    this.generateId = generateId();
     this.removeTodo = this.removeTodo.bind(this);
   }
 
   addNewTodo(todo) {
     this.setState(state => {
-      const newTodo = {status: getDefault(), todo, id: this.generateId()};
+      const newTodo = {status: getDefault(), todo, id: this.lastTaskId++};
       return {todoList: [...state.todoList, newTodo]};
     });
   }
