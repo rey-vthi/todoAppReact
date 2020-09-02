@@ -20,10 +20,12 @@ class TodoList extends React.Component {
   }
 
   addNewTodo(todo) {
+    const nextId = this.lastTaskId + 1;
     this.setState(state => {
-      const newTodo = {status: getDefault(), todo, id: this.lastTaskId++};
+      const newTodo = {status: getDefault(), todo, id: nextId};
       return {todoList: [...state.todoList, newTodo]};
     });
+    this.lastTaskId = nextId;
   }
 
   updateTodoStatus(id) {
