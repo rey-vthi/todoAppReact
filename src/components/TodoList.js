@@ -45,11 +45,9 @@ class TodoList extends React.Component {
   }
 
   removeTodo(id) {
-    this.setState(({todoList}) => {
-      const allTodo = todoList.map(todo => ({...todo}));
-      const todo = allTodo.find(todo => todo.id === id);
-      allTodo.splice(allTodo.indexOf(todo), 1);
-      return {todoList: allTodo};
+    this.setState(state => {
+      const todoList = state.todoList.filter(todo => todo.id !== id);
+      return {todoList};
     });
   }
 
