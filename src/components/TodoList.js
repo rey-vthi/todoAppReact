@@ -21,6 +21,7 @@ class TodoList extends React.Component {
     this.updateTodoStatus = this.updateTodoStatus.bind(this);
     this.updateTitle = this.updateTitle.bind(this);
     this.generateId = generateId();
+    this.removeTodo = this.removeTodo.bind(this);
   }
 
   addNewTodo(todo) {
@@ -43,6 +44,15 @@ class TodoList extends React.Component {
     this.setState({title});
   }
 
+  removeTodo(id) {
+    this.setState(({todoList}) => {
+      const allTodo = todoList.map(todo => ({...todo}));
+      const todo = allTodo.find(todo => todo.id === id);
+      allTodo.splice(allTodo.indexOf(todo), 1);
+      return {todoList: allTodo};
+    });
+  }
+
   render() {
     const todoList = this.state.todoList.map(({status, todo, id}, index) => (
       <Todo
@@ -51,6 +61,7 @@ class TodoList extends React.Component {
         key={index}
         id={id}
         toggleStatus={this.updateTodoStatus}
+        removeTodo={this.removeTodo}
       />
     ));
     return (

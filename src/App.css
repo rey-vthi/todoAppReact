@@ -1,32 +1,6 @@
-.pending-todo {
-  background-color: lightblue;
-}
-
-.processing-todo {
-  background-color: lightsalmon;
-}
-
-.done-todo {
-  background-color: mediumseagreen;
-}
-
-.status {
-  width: 10px;
-  height: 18px;
-}
-
 .todo {
   display: flex;
-  padding-top: 10px;
-}
-
-.todo span {
-  cursor: pointer;
-  padding-left: 10px;
-}
-
-.strike-through {
-  text-decoration: line-through;
+  justify-content: space-between;
 }
 
 .title {
@@ -44,7 +18,34 @@
   margin-top: 1vw;
 }
 
-.todoTitle {
-  font-size: larger;
-  font-weight: bold;
+.remove {
+  cursor: pointer;
+}
+
+.task {
+  margin: 4px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.done {
+  text-decoration: line-through;
+}
+
+.task::before {
+  content: '';
+  padding-left: 10px;
+  margin-right: 4px;
+}
+
+.done::before {
+  background-color: mediumseagreen;
+}
+
+.working::before {
+  background-color: lightsalmon;
+}
+
+.undone::before {
+  background-color: lightblue;
 }
