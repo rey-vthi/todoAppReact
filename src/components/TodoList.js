@@ -5,6 +5,11 @@ import '../App.css';
 import {getDefault, toggleStatus} from './statusIterator';
 import TodoTitle from './TodoTitle';
 
+const generateId = function() {
+  let id = 0;
+  return () => id++;
+};
+
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
@@ -15,11 +20,12 @@ class TodoList extends React.Component {
     this.addNewTodo = this.addNewTodo.bind(this);
     this.updateTodoStatus = this.updateTodoStatus.bind(this);
     this.updateTitle = this.updateTitle.bind(this);
+    this.generateId = generateId();
   }
 
   addNewTodo(todo) {
     this.setState(state => {
-      const newTodo = {status: getDefault(), todo};
+      const newTodo = {status: getDefault(), todo, id: this.generateId()};
       return {todoList: [...state.todoList, newTodo]};
     });
   }
@@ -27,24 +33,23 @@ class TodoList extends React.Component {
   updateTodoStatus(id) {
     this.setState(({todoList}) => {
       const allTodo = todoList.map(todo => ({...todo}));
-      allTodo[id].status = toggleStatus(allTodo[id].status);
+      const todo = allTodo.find(todo => todo.id === id);
+      todo.status = toggleStatus(todo.status);
       return {todoList: allTodo};
     });
   }
 
   updateTitle(title) {
-    this.setState(({todoList}) => {
-      return {todoList, title};
-    });
+    this.setState({title});
   }
 
   render() {
-    const todoList = this.state.todoList.map(({status, todo}, index) => (
+    const todoList = this.state.todoList.map(({status, todo, id}, index) => (
       <Todo
         status={status}
         todo={todo}
         key={index}
-        id={index}
+        id={id}
         toggleStatus={this.updateTodoStatus}
       />
     ));
