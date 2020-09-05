@@ -1,81 +1,65 @@
-import React from 'react';
+import React, {useState} from 'react';
 import InputBox from './InputBox';
 import Todo from './Todo';
 import '../App.css';
 import {getDefault, toggleStatus} from './statusIterator';
 import TodoTitle from './TodoTitle';
 
-class TodoList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: 'Todo',
-      todoList: []
-    };
-    this.lastTaskId = 0;
-    this.addNewTodo = this.addNewTodo.bind(this);
-    this.updateTodoStatus = this.updateTodoStatus.bind(this);
-    this.updateTitle = this.updateTitle.bind(this);
-    this.removeTodo = this.removeTodo.bind(this);
-    this.removeAllTodo = this.removeAllTodo.bind(this);
-  }
+const TodoList = function(props) {
+  const [todoList, setTodoList] = useState([]);
+  const [, setLastTaskId] = useState(0);
+  const [title, setTitle] = useState('Todo');
 
-  addNewTodo(todo) {
-    const nextId = this.lastTaskId + 1;
-    this.setState(state => {
-      const newTodo = {status: getDefault(), todo, id: nextId};
-      return {todoList: [...state.todoList, newTodo]};
+  const updateTitle = function(title) {
+    setTitle(title);
+  };
+
+  const removeAllTodo = function() {
+    setTodoList([]);
+  };
+
+  const addNewTodo = function(todo) {
+    setLastTaskId(id => {
+      const newId = id + 1;
+      setTodoList(list => list.concat({todo, id: newId, status: getDefault()}));
+      return newId;
     });
-    this.lastTaskId = nextId;
-  }
+  };
 
-  updateTodoStatus(id) {
-    this.setState(({todoList}) => {
+  const toggleTodoStatus = function(id) {
+    setTodoList(todoList => {
       const allTodo = todoList.map(todo => ({...todo}));
       const todo = allTodo.find(todo => todo.id === id);
       todo.status = toggleStatus(todo.status);
-      return {todoList: allTodo};
+      return allTodo;
     });
-  }
+  };
 
-  updateTitle(title) {
-    this.setState({title});
-  }
+  const removeTodo = function(id) {
+    setTodoList(todoList => todoList.filter(todo => todo.id !== id));
+  };
 
-  removeTodo(id) {
-    this.setState(state => {
-      const todoList = state.todoList.filter(todo => todo.id !== id);
-      return {todoList};
-    });
-  }
+  const allTodos = todoList.map(({status, todo, id}, index) => (
+    <Todo
+      status={status}
+      todo={todo}
+      key={index}
+      toggleStatus={() => toggleTodoStatus(id)}
+      removeTodo={() => removeTodo(id)}
+    />
+  ));
 
-  removeAllTodo() {
-    this.setState({todoList: []});
-    this.lastTaskId = 0;
-  }
-
-  render() {
-    const todoList = this.state.todoList.map(({status, todo, id}, index) => (
-      <Todo
-        status={status}
-        todo={todo}
-        key={index}
-        toggleStatus={() => this.updateTodoStatus(id)}
-        removeTodo={() => this.removeTodo(id)}
+  return (
+    <div className="container">
+      <TodoTitle
+        title={title}
+        updateTitle={updateTitle}
+        removeAllTodo={removeAllTodo}
       />
-    ));
-    return (
-      <div className="container">
-        <TodoTitle
-          title={this.state.title}
-          updateTitle={this.updateTitle}
-          removeAllTodo={this.removeAllTodo}
-        />
-        {todoList}
-        <InputBox onEnter={this.addNewTodo} />
-      </div>
-    );
-  }
-}
+      {allTodos}
+      <InputBox onEnter={addNewTodo} value="" />
+    </div>
+  );
+};
 
 export default TodoList;

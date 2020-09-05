@@ -31,8 +31,4 @@ class InputBox extends React.Component {
   }
 }
 
-InputBox.defaultProps = {
-  value: ''
-};
-
 export default InputBox;
