@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import InputBox from './InputBox';
 import Todo from './Todo';
 import '../App.css';
@@ -7,8 +7,8 @@ import TodoTitle from './TodoTitle';
 
 const TodoList = function(props) {
   const [todoList, setTodoList] = useState([]);
-  const [, setLastTaskId] = useState(0);
   const [title, setTitle] = useState('Todo');
+  const taskId = useRef(0);
 
   const updateTitle = function(title) {
     setTitle(title);
@@ -19,11 +19,10 @@ const TodoList = function(props) {
   };
 
   const addNewTodo = function(todo) {
-    setLastTaskId(id => {
-      const newId = id + 1;
-      setTodoList(list => list.concat({todo, id: newId, status: getDefault()}));
-      return newId;
-    });
+    taskId.current = taskId.current + 1;
+    setTodoList(list =>
+      list.concat({todo, id: taskId.current, status: getDefault()})
+    );
   };
 
   const toggleTodoStatus = function(id) {
