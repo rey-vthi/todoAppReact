@@ -6,10 +6,7 @@ const postReq = (url, data) => {
   });
 };
 
-const getAllTodo = () =>
-  fetch('/api/getAllTodo').then(res => {
-    return res.json();
-  });
+const getAllTodo = () => fetch('/api/getAllTodo').then(res => res.json());
 
 const addTodo = todo => {
   return postReq('/api/addTodo', {todo});
