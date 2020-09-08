@@ -14,4 +14,4 @@ const toggleStatus = function(currentStatus) {
   return toggle[currentStatus];
 };
 
-export {getDefault, toggleStatus};
+module.exports = {toggleStatus, getDefault};

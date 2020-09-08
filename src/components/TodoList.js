@@ -1,44 +1,43 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import InputBox from './InputBox';
 import Todo from './Todo';
 import '../App.css';
-import {getDefault, toggleStatus} from './statusIterator';
 import TodoTitle from './TodoTitle';
+import todoApi from './todoAPI';
 
 const TodoList = function(props) {
-  const [todoList, setTodoList] = useState([]);
-  const [title, setTitle] = useState('Todo');
-  const taskId = useRef(0);
+  const [allTodo, setTodoList] = useState({
+    title: '',
+    todoList: [],
+    lastTaskId: 0
+  });
+
+  const updateTodoList = () => todoApi.getAllTodo().then(setTodoList);
+  useEffect(() => {
+    updateTodoList();
+  }, []);
 
   const updateTitle = function(title) {
-    setTitle(title);
+    todoApi.updateTitle(title).then(updateTodoList);
   };
 
-  const removeAllTodo = function() {
-    setTodoList([]);
+  const deleteAllTodo = function() {
+    todoApi.deleteAllTodo().then(updateTodoList);
   };
 
-  const addNewTodo = function(todo) {
-    taskId.current = taskId.current + 1;
-    setTodoList(list =>
-      list.concat({todo, id: taskId.current, status: getDefault()})
-    );
+  const addTodo = function(todo) {
+    todoApi.addTodo(todo).then(updateTodoList);
   };
 
   const toggleTodoStatus = function(id) {
-    setTodoList(todoList => {
-      const allTodo = todoList.map(todo => ({...todo}));
-      const todo = allTodo.find(todo => todo.id === id);
-      todo.status = toggleStatus(todo.status);
-      return allTodo;
-    });
+    todoApi.toggleTodoStatus(id).then(updateTodoList);
   };
 
   const removeTodo = function(id) {
-    setTodoList(todoList => todoList.filter(todo => todo.id !== id));
+    todoApi.deleteTodo(id).then(updateTodoList);
   };
 
-  const allTodos = todoList.map(({status, todo, id}, index) => (
+  const allTodos = allTodo.todoList.map(({status, todo, id}, index) => (
     <Todo
       status={status}
       todo={todo}
@@ -51,12 +50,12 @@ const TodoList = function(props) {
   return (
     <div className="container">
       <TodoTitle
-        title={title}
+        title={allTodo.title}
         updateTitle={updateTitle}
-        removeAllTodo={removeAllTodo}
+        removeAllTodo={deleteAllTodo}
       />
       {allTodos}
-      <InputBox onEnter={addNewTodo} value="" />
+      <InputBox onEnter={addTodo} value="" />
     </div>
   );
 };
